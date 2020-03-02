@@ -9,10 +9,11 @@ const MyInput = ({ value, onChange }) => (
 
 const Task = ({ id, name, descr, priority }) => (
   <div>
-    <div>{id}</div>
+    <div>ID {id}</div>
     <div>{name}</div>
     <div>{descr}</div>
     <div>{priority}</div>
+    <p></p>
   </div>
 );
 
@@ -27,28 +28,32 @@ class ClassComponent extends React.Component {
 
   handleChangeName = (event) => {
     const newValue = event.target.value;
-    this.setState(state => ({ name: newValue  }));
+    this.setState({ name: newValue  });
   };
 
   handleChangeDescr = (event) => {
     const newValue = event.target.value;
-    this.setState(state => ({ descr: newValue  }));
+    this.setState({ descr: newValue  });
   };
 
   handleChangePriority = (event) => {
     const newValue = event.target.value;
-    this.setState(state => ({ prior: newValue  }));
+    this.setState({ prior: newValue  });
   };
 
   PushNewTask = () => {
-    this.setState(state => ({ id: state.id + 1 }));
+    this.setState({ id: this.state.id + 1 });
     const taski = {
       id: this.state.id,
       name: this.state.name,
       descr: this.state.descr,
       prior: this.state.prior,
     }
-    this.setState(state => (state.tasks.push(taski)));
+    this.setState(state => {
+      const newState = { ...state };
+      newState.tasks.push(taski);
+      return newState;
+    });
   };
 
   byField = (field) => {
@@ -56,11 +61,19 @@ class ClassComponent extends React.Component {
   }
 
   SortingName = () => {
-    this.setState(state => this.state.tasks.sort(this.byField('name')));
+    this.setState(state => {
+      const newState = { ...state };
+      newState.tasks.sort(this.byField('name'));
+      return newState;
+    });
   }
 
   SortingPriority = () => {
-    this.setState(state => this.state.tasks.sort(this.byField('prior')));
+    this.setState(state => {
+      const newState = { ...state };
+      newState.tasks.sort(this.byField('prior'));
+      return newState;
+    });
   }
 
   render() {
@@ -78,13 +91,13 @@ class ClassComponent extends React.Component {
         <MyInput
           onChange={this.handleChangePriority}
         />
-        <button className="content" onClick={() => this.PushNewTask()}>
+        <button className="content" onClick={this.PushNewTask}>
           {"Добавить задание"}
         </button>
-        <button className="content" onClick={() => this.SortingName()}>
+        <button className="content" onClick={this.SortingName}>
           {"Сортировать по имени"}
         </button>
-        <button className="content" onClick={() => this.SortingPriority()}>
+        <button className="content" onClick={this.SortingPriority}>
           {"Сортировать по приоритету"}
         </button>
         <div>
