@@ -11,7 +11,6 @@ const MyInput = ({ value, onChange, theme }) => (
 )
 
 const Task = ({ id, name, descr, priority }) => (
-  //<div className={cx("task")}>
   <tr>
     <th>ID{id}</th>
     <th>{name} </th>
